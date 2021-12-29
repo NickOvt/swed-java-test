@@ -27,8 +27,9 @@ public class Parking {
     }
 
     @PostMapping
-    public ResponseEntity<?> parkCar(@RequestBody Car car) {
+    public ResponseEntity<?> parkCar(@RequestBody Car car) throws Exception {
         carParkingService.addCar(car);
+        System.out.println(carParkingService.getAllCars());
         return ResponseEntity.ok("Parked car with plate number: " + car.getPlateNumber() + " and height of: " + car.getHeight() + " and weight of: " + car.getWeight());
     }
 

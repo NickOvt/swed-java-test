@@ -11,8 +11,17 @@ public class FakeCarDataAccessService implements CarDao{
     private static List<Car> DB = new ArrayList<>();
 
     @Override
-    public int addCar(Car car) {
-        DB.add(car);
-        return 1;
+    public boolean addCar(Car car) throws Exception {
+        try {
+            DB.add(car);
+            return true;
+        } catch (Exception e) {
+            throw new Exception("Error adding car to DB");
+        }
+    }
+
+    @Override
+    public List<Car> getAllCars() {
+        return DB;
     }
 }
