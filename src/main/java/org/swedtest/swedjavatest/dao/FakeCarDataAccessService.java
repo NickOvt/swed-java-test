@@ -12,6 +12,9 @@ public class FakeCarDataAccessService implements CarDao{
 
     @Override
     public boolean addCar(Car car) throws Exception {
+        if (DB.contains(car)) {
+            return false;
+        }
         try {
             DB.add(car);
             return true;

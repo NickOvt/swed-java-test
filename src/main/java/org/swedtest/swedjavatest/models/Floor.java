@@ -1,5 +1,8 @@
 package org.swedtest.swedjavatest.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Floor {
     private final int floorNumber;
     private final Float ceilingHeight;
@@ -7,6 +10,7 @@ public class Floor {
     private int leftWeightCapacity;
     private final int totalSpots;
     private int leftSpots;
+    private List<String> parkedCarsPlateNumbers = new ArrayList<>();
 
     public Floor(int floorNumber, Float ceilingHeight, int totalWeightCapacity, int totalSpots) {
         this.floorNumber = floorNumber;
@@ -47,6 +51,14 @@ public class Floor {
 
     public void setLeftSpots(int leftSpots) {
         this.leftSpots = leftSpots;
+    }
+
+    public List<String> getParkedCarsPlateNumbers() {
+        return this.parkedCarsPlateNumbers;
+    }
+
+    public void addParkedCarsPlateNumber(String parkedCarPlateNumber) {
+        this.parkedCarsPlateNumbers.add(parkedCarPlateNumber);
     }
 
 }
