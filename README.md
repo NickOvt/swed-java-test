@@ -13,15 +13,22 @@
 {id} - (String) plate number of a single car to get.  
 Returns a single Car object or an error message if car with specified plate number was not found.
 - **/cars/park** - `POST` | Park a single car.  
-Pass in car as a JSON object with `weight` (int), `platenumber` (string), `height` (float).  
+Pass in car as a JSON object as 
+```
+{
+  "weight": (int) weight of the car in kg,
+  "platenumber": (String) plate number of the car,
+  "height": (float) height of the car in meters
+}
+```  
 Returns a response with the parked car info and what floor it was parked to or an error message if there is any.
 - **/cars/unpark/{id}** - `POST` | Unpark a single car.  
 {id} - (String) plate number of a car to unpark.  
 Returns a response: 
 ```  
 {  
-  carPlateNumber: "<Plate number of the deleted car>",  
-  parkingPrice: (float) price of the parking  
+  "carPlateNumber": "<Plate number of the deleted car>",  
+  "parkingPrice": (float) price of the parking  
 }  
 ``` 
 or an error message if there is any.
@@ -32,5 +39,6 @@ or an error message if there is any.
 **Must run this before actually testing the API as there are no floors when the server is first started.**
 
 #### How to run:
-You can either run it directly in IntelliJ IDEA, or first build the project using gradle. For that enter the root of the project and run `./gradlew build` command and then run the created `.jar` file with `java -jar <name of the jar>.jar`.
+You can either run it directly in IntelliJ IDEA, or first build the project using gradle. For that enter the root of the project and run `./gradlew build` command and then run the created `.jar` file with  
+`java -jar <name of the jar>.jar`.
 Alternatively you can directly run the project by issuing a command `./gradlew bootRun` in the root of the App.
