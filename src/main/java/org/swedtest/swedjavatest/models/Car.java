@@ -13,7 +13,8 @@ public class Car {
     private final Float height;
     @NotBlank
     private final int weight;
-    private Date parkingTime;
+    private Date parkingTimeStart;
+    private int parkedToFloor;
 
     public Car(@JsonProperty("platenumber") String plateNumber, @JsonProperty("height") Float height,
             @JsonProperty("weight") int weight) {
@@ -34,12 +35,20 @@ public class Car {
         return this.weight;
     }
 
-    public Date getParkingTime() {
-        return this.parkingTime;
+    public Date getParkingTimeStart() {
+        return this.parkingTimeStart;
     }
 
-    public void setParkingTime(Date parkingTime) {
-        this.parkingTime = parkingTime;
+    public void setParkingTimeStart(Date parkingTimeStart) {
+        this.parkingTimeStart = parkingTimeStart;
+    }
+
+    public int getParkedToFloor() {
+        return this.parkedToFloor;
+    }
+
+    public void setParkedToFloor(int parkedToFloor) {
+        this.parkedToFloor = parkedToFloor;
     }
 
 }

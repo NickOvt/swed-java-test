@@ -7,7 +7,9 @@ import org.swedtest.swedjavatest.models.Car;
 import org.swedtest.swedjavatest.models.Floor;
 
 public interface ParkingHouseDao {
-    boolean parkCar(Floor floor, Car car);
+    Floor parkCar(Floor floor, Car car);
+
+    void unparkCar(Floor floor, Car car);
 
     Optional<Floor> selectFloorById(int floorNumber);
 
@@ -16,4 +18,6 @@ public interface ParkingHouseDao {
     void addParkingFloor(Floor floor);
 
     List<Floor> initializeParkingHouse();
+
+    List<String> getAllCarPlateNumbersFromFloor(int floorId);
 }

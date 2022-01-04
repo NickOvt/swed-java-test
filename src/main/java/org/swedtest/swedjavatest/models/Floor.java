@@ -61,4 +61,8 @@ public class Floor {
         this.parkedCarsPlateNumbers.add(parkedCarPlateNumber);
     }
 
+    public void removePlateNumberFromParkedCarsPlateNumber(String parkedCarPlateNumber) {
+        this.parkedCarsPlateNumbers.remove(parkedCarPlateNumber);
+    }
+
 }

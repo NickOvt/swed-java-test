@@ -1,6 +1,9 @@
 package org.swedtest.swedjavatest.services;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,17 +34,23 @@ public class CarParkingService {
         return carDao.getAllCars();
     }
 
+    public Optional<Car> getCarByPlateNumber(String plateNumber) {
+        return carDao.getCarByPlateNumber(plateNumber);
+    }
+
     public List<Floor> initializeParkingHouse() {
         return parkingHouseDao.initializeParkingHouse();
     }
 
-    public boolean parkCar(Car car) throws Exception {
-        this.addCar(car);
+    public Floor parkCar(Car car) throws Exception {
         List<Floor> floors = parkingHouseDao.getAllFloors();
         int bestSuitableFloorIndex = 0;
+        boolean didFindSuitableFloor = false;
         if (floors.size() < 1) {
-            throw new Exception("Parking house does not exist yet. Initialize one!");
+            throw new Exception(
+                    "Parking house does not exist yet. Initialize one! By sending a POST request to /parking/initialize");
         }
+
         for (int i = 1; i < floors.size(); i++) {
             Floor currFloor = floors.get(i);
             Floor prevFloor = floors.get(i - 1);
@@ -50,13 +59,40 @@ public class CarParkingService {
                     && (currFloor.getCeilingHeight() > car.getHeight()
                             && currFloor.getLeftWeightCapacity() > car.getWeight()
                             && currFloor.getLeftSpots() > 0)) {
+                didFindSuitableFloor = true;
                 bestSuitableFloorIndex = i;
             }
         }
-        return parkingHouseDao.parkCar(floors.get(bestSuitableFloorIndex), car);
+        if (didFindSuitableFloor) {
+            if (!this.addCar(car))
+                throw new Exception("Such car already is parked! (Same plate number)");
+            return parkingHouseDao.parkCar(floors.get(bestSuitableFloorIndex), car);
+        }
+        throw new Exception("Did not find a suitable floor to park the car to!");
+    }
+
+    public Float unparkCar(Car car) throws Exception {
+        Optional<Floor> floorWithCurrentCarToUnpark = parkingHouseDao.selectFloorById(car.getParkedToFloor());
+        if (floorWithCurrentCarToUnpark.isEmpty()) {
+            throw new Exception("Failed to unpark such a car! Did not find corresponding floor!");
+        }
+        long diff = new Date().getTime() - car.getParkingTimeStart().getTime();
+        Float currentPriceToPay = TimeUnit.MILLISECONDS.toMinutes(diff) * car.getWeight() * 0.001f * car.getHeight()
+                * 0.25f;
+        
+        floorWithCurrentCarToUnpark.get().setLeftSpots(floorWithCurrentCarToUnpark.get().getLeftSpots() + 1);
+        floorWithCurrentCarToUnpark.get().setLeftWeightCapacity(-car.getWeight());
+        
+        parkingHouseDao.unparkCar(floorWithCurrentCarToUnpark.get(), car);
+        carDao.deleteCar(car);
+        return currentPriceToPay;
     }
 
     public List<Floor> getAllFloors() {
         return parkingHouseDao.getAllFloors();
+    }
+
+    public List<String> getAllCarPlateNumbersFromFloor(int floorId) {
+        return parkingHouseDao.getAllCarPlateNumbersFromFloor(floorId);
     }
 }
