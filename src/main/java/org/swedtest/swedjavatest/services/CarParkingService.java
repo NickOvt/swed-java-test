@@ -34,8 +34,12 @@ public class CarParkingService {
         return carDao.getAllCars();
     }
 
-    public Optional<Car> getCarByPlateNumber(String plateNumber) {
-        return carDao.getCarByPlateNumber(plateNumber);
+    public Car getCarByPlateNumber(String plateNumber) throws Exception {
+        Optional<Car> carToGetByPlateNumber = carDao.getCarByPlateNumber(plateNumber);
+        if (carToGetByPlateNumber.isEmpty()) {
+            throw new Exception("No car in parking house with such plate number!");
+        }
+        return carToGetByPlateNumber.get();
     }
 
     public List<Floor> initializeParkingHouse() {
@@ -92,7 +96,19 @@ public class CarParkingService {
         return parkingHouseDao.getAllFloors();
     }
 
-    public List<String> getAllCarPlateNumbersFromFloor(int floorId) {
-        return parkingHouseDao.getAllCarPlateNumbersFromFloor(floorId);
+    public Floor getSingleFLoor(int floorNumber) throws Exception {
+        Optional<Floor> floorToGet = parkingHouseDao.selectFloorById(floorNumber);
+        if (floorToGet.isEmpty()) {
+            throw new Exception("No floor with such ID!");
+        }
+        return floorToGet.get();
+    }
+
+    public List<String> getAllCarPlateNumbersFromFloor(int floorId) throws Exception {
+        Optional<List<String>> carPlateNumbersToGetFromFloor = parkingHouseDao.getAllCarPlateNumbersFromFloor(floorId);
+        if (carPlateNumbersToGetFromFloor.isEmpty()) {
+            throw new Exception("No floor with such ID!");
+        }
+        return carPlateNumbersToGetFromFloor.get();
     }
 }

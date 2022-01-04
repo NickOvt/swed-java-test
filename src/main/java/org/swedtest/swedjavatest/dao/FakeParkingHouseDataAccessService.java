@@ -64,9 +64,9 @@ public class FakeParkingHouseDataAccessService implements ParkingHouseDao {
     }
 
     @Override
-    public List<String> getAllCarPlateNumbersFromFloor(int floorId) {
+    public Optional<List<String>> getAllCarPlateNumbersFromFloor(int floorId) {
         return selectFloorById(floorId).map(fl -> {
             return fl.getParkedCarsPlateNumbers();
-        }).orElse(new ArrayList<String>());
+        });
     }
 }

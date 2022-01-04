@@ -19,5 +19,5 @@ public interface ParkingHouseDao {
 
     List<Floor> initializeParkingHouse();
 
-    List<String> getAllCarPlateNumbersFromFloor(int floorId);
+    Optional<List<String>>  getAllCarPlateNumbersFromFloor(int floorId);
 }
