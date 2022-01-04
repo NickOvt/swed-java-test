@@ -3,7 +3,7 @@
 
 ### The test is about an API for a Parking House with N floors each of which has some ceiling height and some total weight capacity.
 
-###### Local deverver should start on localhost:8080
+###### Local devserver should start on localhost:8080
 
 #### Available routes:
 *localhost:8080~*  
