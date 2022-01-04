@@ -39,6 +39,7 @@ or an error message if there is any.
 **Must run this before actually testing the API as there are no floors when the server is first started.**
 
 #### How to run:
-You can either run it directly in IntelliJ IDEA, or first build the project using gradle. For that enter the root of the project and run `./gradlew build` command and then run the created `.jar` file with  
+You can either run it directly in IntelliJ IDEA, or first build the project using gradle. For that enter the root of the project and run  
+`./gradlew build` command and then run the created `.jar` file with  
 `java -jar <name of the jar>.jar`.
 Alternatively you can directly run the project by issuing a command `./gradlew bootRun` in the root of the App.
