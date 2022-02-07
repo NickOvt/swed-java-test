@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.swedtest.swedjavatest.models.Car;
 
 public interface CarDao {
-    boolean addCar(Car car) throws Exception;
+    boolean addCar(Car car);
 
-    void deleteCar(Car car) throws Exception;
+    void deleteCar(Car car);
 
     List<Car> getAllCars();
 

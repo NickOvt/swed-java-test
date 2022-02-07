@@ -3,14 +3,26 @@ package org.swedtest.swedjavatest.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Floor {
+    @Id
     private final int floorNumber;
+
     private final Float ceilingHeight;
     private final int totalWeightCapacity;
     private int leftWeightCapacity;
     private final int totalSpots;
     private int leftSpots;
-    private List<String> parkedCarsPlateNumbers = new ArrayList<>();
+    @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Car> parkedCars = new ArrayList<>();
 
     public Floor(int floorNumber, Float ceilingHeight, int totalWeightCapacity, int totalSpots) {
         this.floorNumber = floorNumber;
@@ -53,16 +65,16 @@ public class Floor {
         this.leftSpots = leftSpots;
     }
 
-    public List<String> getParkedCarsPlateNumbers() {
-        return this.parkedCarsPlateNumbers;
-    }
+    // public List<String> getParkedCarsPlateNumbers() {
+    //     return this.parkedCarsPlateNumbers;
+    // }
 
-    public void addParkedCarsPlateNumber(String parkedCarPlateNumber) {
-        this.parkedCarsPlateNumbers.add(parkedCarPlateNumber);
-    }
+    // public void addParkedCarsPlateNumber(String parkedCarPlateNumber) {
+    //     this.parkedCarsPlateNumbers.add(parkedCarPlateNumber);
+    // }
 
-    public void removePlateNumberFromParkedCarsPlateNumber(String parkedCarPlateNumber) {
-        this.parkedCarsPlateNumbers.remove(parkedCarPlateNumber);
-    }
+    // public void removePlateNumberFromParkedCarsPlateNumber(String parkedCarPlateNumber) {
+    //     this.parkedCarsPlateNumbers.remove(parkedCarPlateNumber);
+    // }
 
 }

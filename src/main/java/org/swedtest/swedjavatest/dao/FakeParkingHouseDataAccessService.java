@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.swedtest.swedjavatest.models.Car;
 import org.swedtest.swedjavatest.models.Floor;
 
-@Repository("fakeparkinghousedao")
+@Repository()
 public class FakeParkingHouseDataAccessService implements ParkingHouseDao {
     private static List<Floor> parkingHouseFloors = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class FakeParkingHouseDataAccessService implements ParkingHouseDao {
         car.setParkedToFloor(currFloor.getFloorNumber());
         int indexOfFloorToUpdate = parkingHouseFloors.indexOf(currFloor);
 
-        currFloor.addParkedCarsPlateNumber(car.getPlateNumber());
+        // currFloor.addParkedCarsPlateNumber(car.getPlateNumber());
         currFloor.setLeftSpots(currFloor.getLeftSpots() - 1);
         currFloor.setLeftWeightCapacity(car.getWeight());
 
@@ -37,7 +37,7 @@ public class FakeParkingHouseDataAccessService implements ParkingHouseDao {
         Floor currFloor = floor;
         int indexOfFloorToUpdate = parkingHouseFloors.indexOf(currFloor);
 
-        currFloor.removePlateNumberFromParkedCarsPlateNumber(car.getPlateNumber());
+        // currFloor.removePlateNumberFromParkedCarsPlateNumber(car.getPlateNumber());
 
         parkingHouseFloors.set(indexOfFloorToUpdate, currFloor);
     }
@@ -66,7 +66,8 @@ public class FakeParkingHouseDataAccessService implements ParkingHouseDao {
     @Override
     public Optional<List<String>> getAllCarPlateNumbersFromFloor(int floorId) {
         return selectFloorById(floorId).map(fl -> {
-            return fl.getParkedCarsPlateNumbers();
+            // return fl.getParkedCarsPlateNumbers();
+            throw new RuntimeException();
         });
     }
 }

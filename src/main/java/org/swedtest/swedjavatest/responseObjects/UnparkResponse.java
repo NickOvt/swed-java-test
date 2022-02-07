@@ -1,4 +1,4 @@
-package org.swedtest.swedjavatest.models;
+package org.swedtest.swedjavatest.responseObjects;
 
 public class UnparkResponse {
     private final String carPlateNumber;

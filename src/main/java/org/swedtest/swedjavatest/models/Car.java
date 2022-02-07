@@ -2,22 +2,41 @@ package org.swedtest.swedjavatest.models;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+@Entity
+@Table
 public class Car {
+    @Id
     @NotBlank
     private final String plateNumber;
-    @NotBlank
+    @Positive
+    @NotNull
     private final Float height;
-    @NotBlank
+    @Positive
+    @NotNull
     private final int weight;
+    @NotNull
+    @PastOrPresent
     private Date parkingTimeStart;
+    @Positive
+    @NotNull
     private int parkedToFloor;
 
-    public Car(@JsonProperty("platenumber") String plateNumber, @JsonProperty("height") Float height,
-            @JsonProperty("weight") int weight) {
+    @ManyToOne
+    @JoinColumn(name = "floorNumber", nullable = false)
+    private Floor floor;
+
+    public Car(String plateNumber, Float height,
+            int weight) {
         this.plateNumber = plateNumber;
         this.height = height;
         this.weight = weight;
